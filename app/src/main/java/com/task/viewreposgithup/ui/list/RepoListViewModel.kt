@@ -4,13 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.task.viewreposgithup.data.remote.dto.toDbSortKey
 import com.task.viewreposgithup.domain.model.Repo
 import com.task.viewreposgithup.domain.model.SortOption
 import com.task.viewreposgithup.domain.usecase.GetRepositoriesUseCase
 import com.task.viewreposgithup.domain.usecase.ToggleBookmarkUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -41,7 +41,7 @@ class RepoListViewModel @Inject constructor(
     private val _sortOption = MutableStateFlow(SortOption.NAME_ASC)
     val sortOption: StateFlow<SortOption> = _sortOption.asStateFlow()
 
-    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     val repositoriesPagingFlow: Flow<PagingData<Repo>> = combine(
         _searchQuery
             .debounce(300)
@@ -54,7 +54,7 @@ class RepoListViewModel @Inject constructor(
         getRepositoriesUseCase(
             language = language,
             searchQuery = query,
-            sortBy = sort.dbSortKey
+            sortBy = sort.toDbSortKey()
         )
     }.cachedIn(viewModelScope)
 

@@ -1,6 +1,7 @@
 package com.task.viewreposgithup.ui.list
 
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -67,6 +68,7 @@ import com.task.viewreposgithup.ui.components.LanguageFilterBottomSheet
 import com.task.viewreposgithup.ui.components.RepoItemCard
 import com.task.viewreposgithup.ui.components.ShimmerRepoLoading
 import com.task.viewreposgithup.ui.components.SortBottomSheet
+
 
 /**
  * Repositories List Screen displaying paginated list of Square Inc repositories,
@@ -405,3 +407,9 @@ private fun RepoListContent(
         }
     }
 }
+val SortOption.titleRes: Int
+    @StringRes get() = when (this) {
+        SortOption.NAME_ASC -> R.string.sort_name_asc
+        SortOption.STARS_DESC -> R.string.sort_stars_desc
+        SortOption.UPDATED_DESC -> R.string.sort_date_desc
+    }

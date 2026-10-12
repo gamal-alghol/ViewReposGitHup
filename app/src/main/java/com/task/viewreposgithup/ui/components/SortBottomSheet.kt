@@ -16,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.R
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -73,8 +74,13 @@ fun SortBottomSheet(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
+
                         Text(
-                            text = stringResource(id = option.titleRes),
+                            text = stringResource(when (option) {
+                                SortOption.NAME_ASC -> com.task.viewreposgithup.R.string.sort_name_asc
+                                SortOption.STARS_DESC -> com.task.viewreposgithup.R.string.sort_stars_desc
+                                SortOption.UPDATED_DESC -> com.task.viewreposgithup.R.string.sort_date_desc
+                            }),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
