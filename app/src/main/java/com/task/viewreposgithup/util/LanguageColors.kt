@@ -6,6 +6,13 @@ import com.task.viewreposgithup.ui.theme.KotlinColor
 import com.task.viewreposgithup.ui.theme.SwiftColor
 import com.task.viewreposgithup.ui.theme.TypeScriptColor
 
+
+val supportedLanguages: List<String> = listOf(
+    "Kotlin", "Java", "Swift", "TypeScript", "JavaScript",
+    "Python", "C++", "C#", "Ruby", "Go", "Rust", "HTML", "CSS", "Shell"
+).sorted()
+
+
 object LanguageColors {
     fun getColorForLanguage(language: String?): Color {
         return when (language) {

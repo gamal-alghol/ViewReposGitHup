@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.task.viewreposgithup.domain.model.SortOption
+import com.task.viewreposgithup.ui.list.titleRes
 
 /**
  * BottomSheet dialog for sorting repositories by name, stars, or date.
@@ -76,11 +77,7 @@ fun SortBottomSheet(
                     ) {
 
                         Text(
-                            text = stringResource(when (option) {
-                                SortOption.NAME_ASC -> com.task.viewreposgithup.R.string.sort_name_asc
-                                SortOption.STARS_DESC -> com.task.viewreposgithup.R.string.sort_stars_desc
-                                SortOption.UPDATED_DESC -> com.task.viewreposgithup.R.string.sort_date_desc
-                            }),
+                            text = stringResource(id = option.titleRes),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface

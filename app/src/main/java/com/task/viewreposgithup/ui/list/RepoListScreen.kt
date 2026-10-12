@@ -1,9 +1,7 @@
 package com.task.viewreposgithup.ui.list
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,7 +37,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,7 +45,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -56,6 +52,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -69,10 +66,9 @@ import com.task.viewreposgithup.ui.components.RepoItemCard
 import com.task.viewreposgithup.ui.components.ShimmerRepoLoading
 import com.task.viewreposgithup.ui.components.SortBottomSheet
 
-
 /**
  * Repositories List Screen displaying paginated list of Square Inc repositories,
- * with state hoisting and scope isolation to prevent recomposition during typing.
+ * using a single UiState to match Details Screen architecture.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,31 +77,27 @@ fun RepoListScreen(
     viewModel: RepoListViewModel = hiltViewModel()
 ) {
     val lazyPagingItems = viewModel.repositoriesPagingFlow.collectAsLazyPagingItems()
-    val selectedLanguage by viewModel.selectedLanguage.collectAsState()
-    val sortOption by viewModel.sortOption.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var showFilterSheet by remember { mutableStateOf(false) }
-    var showSortSheet by remember { mutableStateOf(false) }
-
-    if (showFilterSheet) {
+    if (uiState.isFilterSheetVisible) {
         LanguageFilterBottomSheet(
-            selectedLanguage = selectedLanguage,
+            selectedLanguage = uiState.selectedLanguage,
             onLanguageSelected = { language ->
                 viewModel.setLanguageFilter(language)
-                showFilterSheet = false
+                viewModel.setFilterSheetVisible(false)
             },
-            onDismiss = { showFilterSheet = false }
+            onDismiss = { viewModel.setFilterSheetVisible(false) }
         )
     }
 
-    if (showSortSheet) {
+    if (uiState.isSortSheetVisible) {
         SortBottomSheet(
-            selectedSort = sortOption,
+            selectedSort = uiState.sortOption,
             onSortSelected = { option ->
                 viewModel.setSortOption(option)
-                showSortSheet = false
+                viewModel.setSortSheetVisible(false)
             },
-            onDismiss = { showSortSheet = false }
+            onDismiss = { viewModel.setSortSheetVisible(false) }
         )
     }
 
@@ -113,6 +105,7 @@ fun RepoListScreen(
         topBar = {
             RepoListTopAppBar(
                 viewModel = viewModel,
+                uiState = uiState,
                 onRefresh = { lazyPagingItems.refresh() }
             )
         }
@@ -126,14 +119,14 @@ fun RepoListScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 FilterAndSortSection(
-                    selectedLanguage = selectedLanguage,
-                    sortOption = sortOption,
-                    onFilterClick = { showFilterSheet = true },
-                    onSortClick = { showSortSheet = true },
+                    selectedLanguage = uiState.selectedLanguage,
+                    sortOption = uiState.sortOption,
+                    onFilterClick = { viewModel.setFilterSheetVisible(true) },
+                    onSortClick = { viewModel.setSortSheetVisible(true) },
                     onClearFilter = { viewModel.setLanguageFilter(null) }
                 )
 
-                val hasActiveFilter = selectedLanguage != null
+                val hasActiveFilter = uiState.selectedLanguage != null
 
                 RepoListContent(
                     lazyPagingItems = lazyPagingItems,
@@ -149,13 +142,13 @@ fun RepoListScreen(
 @Composable
 private fun RepoListTopAppBar(
     viewModel: RepoListViewModel,
+    uiState: RepoListUiState,
     onRefresh: () -> Unit
 ) {
-    val searchQuery by viewModel.searchQuery.collectAsState()
     var isSearchActive by remember { mutableStateOf(false) }
 
-    LaunchedEffect(searchQuery) {
-        if (searchQuery.isNotEmpty()) {
+    LaunchedEffect(uiState.searchQuery) {
+        if (uiState.searchQuery.isNotEmpty()) {
             isSearchActive = true
         }
     }
@@ -164,7 +157,7 @@ private fun RepoListTopAppBar(
         title = {
             if (isSearchActive) {
                 OutlinedTextField(
-                    value = searchQuery,
+                    value = uiState.searchQuery,
                     onValueChange = { viewModel.setSearchQuery(it) },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -187,7 +180,7 @@ private fun RepoListTopAppBar(
                         unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
                     ),
                     trailingIcon = {
-                        if (searchQuery.isNotEmpty()) {
+                        if (uiState.searchQuery.isNotEmpty()) {
                             IconButton(onClick = { viewModel.setSearchQuery("") }) {
                                 Icon(
                                     imageVector = Icons.Default.Clear,
@@ -385,7 +378,6 @@ private fun RepoListContent(
                             }
                         }
 
-                        // Append Loading indicator at end of list for pagination only when not filtering/searching
                         if (lazyPagingItems.loadState.append is LoadState.Loading && !hasActiveFilter) {
                             item {
                                 Box(
@@ -407,6 +399,7 @@ private fun RepoListContent(
         }
     }
 }
+
 val SortOption.titleRes: Int
     @StringRes get() = when (this) {
         SortOption.NAME_ASC -> R.string.sort_name_asc

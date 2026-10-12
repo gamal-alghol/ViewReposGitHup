@@ -65,6 +65,7 @@ import com.task.viewreposgithup.R
 import com.task.viewreposgithup.ui.components.AnimatedBookmarkButton
 import com.task.viewreposgithup.ui.components.ErrorStateView
 import com.task.viewreposgithup.util.AppConstants
+import com.task.viewreposgithup.util.LanguageColors
 
 /**
  * Redesigned, gorgeous Repository Details Screen with smooth entrance animations,
@@ -269,7 +270,7 @@ fun RepoDetailsScreen(
 
                                         // Language Badge if available
                                         repo.language?.let { lang ->
-                                            val langColor = AppConstants.LANGUAGE_COLORS[lang]?.let { Color(it) }
+                                            val langColor = LanguageColors.getColorForLanguage(lang)
                                                 ?: MaterialTheme.colorScheme.primary
 
                                             Spacer(modifier = Modifier.width(8.dp))

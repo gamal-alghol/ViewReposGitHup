@@ -33,6 +33,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.task.viewreposgithup.util.AppConstants
+import com.task.viewreposgithup.util.LanguageColors
+import com.task.viewreposgithup.util.supportedLanguages
 
 /**
  * BottomSheet dialog for filtering repositories by programming language.
@@ -45,7 +47,7 @@ fun LanguageFilterBottomSheet(
     onDismiss: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
-    val languages = AppConstants.LANGUAGE_COLORS.keys.sorted()
+    val languages = supportedLanguages
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -115,7 +117,7 @@ fun LanguageFilterBottomSheet(
 
                 items(languages) { lang ->
                     val isSelected = selectedLanguage.equals(lang, ignoreCase = true)
-                    val langColor = AppConstants.LANGUAGE_COLORS[lang]?.let { Color(it) }
+                    val langColor = LanguageColors.getColorForLanguage(lang)
                         ?: MaterialTheme.colorScheme.primary
 
                     Row(

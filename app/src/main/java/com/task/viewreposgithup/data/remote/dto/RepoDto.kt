@@ -1,11 +1,14 @@
 package com.task.viewreposgithup.data.remote.dto
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import com.task.viewreposgithup.domain.model.SortOption
 
 /**
  * Data Transfer Object representing GitHub repository API response.
  */
+
+@Keep
 data class RepoDto(
     @SerializedName("id") val id: Long,
     @SerializedName("name") val name: String,
@@ -16,12 +19,3 @@ data class RepoDto(
     @SerializedName("owner") val owner: OwnerDto?,
     @SerializedName("updated_at") val updatedAt: String?
 )
-fun SortOption.toDbSortKey(): String = when (this) {
-
-    SortOption.NAME_ASC -> "NAME"
-
-    SortOption.STARS_DESC -> "STARS"
-
-    SortOption.UPDATED_DESC -> "DATE"
-
-}
