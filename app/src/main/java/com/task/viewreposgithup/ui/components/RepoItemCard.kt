@@ -38,6 +38,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.task.viewreposgithup.domain.model.Repo
+import com.task.viewreposgithup.ui.theme.DefaultLanguageColor
+import com.task.viewreposgithup.util.LanguageColors
 
 /**
  * Repository Item Card displaying repository name, star count, language,
@@ -152,8 +154,7 @@ fun RepoItemCard(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    val langColor = AppConstants.LANGUAGE_COLORS[lang]?.let { Color(it) }
-                        ?: MaterialTheme.colorScheme.primary
+                    val langColor = LanguageColors.getColorForLanguage(lang)
                     Box(
                         modifier = Modifier
                             .size(10.dp)
