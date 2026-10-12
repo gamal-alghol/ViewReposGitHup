@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Square Repositories</string>
+    <string name="app_subtitle">GitHub Public Open Source Projects</string>
+    <string name="refresh_list">Refresh Repositories</string>
+    <string name="repository_details">Repository Details</string>
+    <string name="back">Back</string>
+    <string name="add_to_bookmarks">Add to Bookmarks</string>
+    <string name="remove_from_bookmarks">Remove from Bookmarks</string>
+    <string name="bookmarked">Bookmarked</string>
+    <string name="stars">Stars</string>
+    <string name="public_repo">Public</string>
+    <string name="about_repository">About Repository</string>
+    <string name="language">Language</string>
+    <string name="open_on_github">Open on GitHub</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="try_again">Try Again</string>
+    <string name="no_description">No description provided for this repository.</string>
+    <string name="rate_limit_error">GitHub API rate limit reached. Please try again later or verify network connection.</string>
+    <string name="search_hint">Search repositories…</string>
+    <string name="filter_language">Language</string>
+    <string name="sort_by">Sort By</string>
+    <string name="all_languages">All Languages</string>
+    <string name="reset">Reset</string>
+    <string name="clear_filter">Clear Filter</string>
+    <string name="sort_name_asc">Name (A - Z)</string>
+    <string name="sort_stars_desc">Most Stars</string>
+    <string name="sort_date_desc">Recently Updated</string>
+    <string name="filter">Filter</string>
+    <string name="sort">Sort</string>
+    <string name="no_repositories_found">No repositories found matching your criteria.</string>
+</resources>
