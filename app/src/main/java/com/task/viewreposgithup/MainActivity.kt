@@ -14,11 +14,12 @@ import com.task.viewreposgithup.ui.navigation.NavGraph
 import com.task.viewreposgithup.ui.theme.ViewReposGitHupTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-/**
+/*
  * Main Activity annotated with @AndroidEntryPoint for Hilt injection.
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()

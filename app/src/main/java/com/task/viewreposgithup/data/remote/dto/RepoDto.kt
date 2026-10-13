@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import com.task.viewreposgithup.domain.model.SortOption
 
-/**
+/*
  * Data Transfer Object representing GitHub repository API response.
  */
 

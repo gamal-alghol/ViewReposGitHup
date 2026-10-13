@@ -2,7 +2,7 @@ package com.task.viewreposgithup.domain.model
 
 import com.task.viewreposgithup.R
 
-/**
+/*
  * Sorting options for repositories list.
  */
 

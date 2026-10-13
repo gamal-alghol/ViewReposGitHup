@@ -13,13 +13,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/**
- * Hilt DI Module for Room Database injection.
- */
+
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
+    /*
+     * Provides singleton instance of AppDatabase.
+     */
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
@@ -30,11 +31,17 @@ object DatabaseModule {
         ).fallbackToDestructiveMigration().build()
     }
 
+    /*
+     * Provides RepoDao instance from AppDatabase.
+     */
     @Provides
     fun provideRepoDao(database: AppDatabase): RepoDao {
         return database.repoDao()
     }
 
+    /*
+     * Provides RemoteKeysDao instance from AppDatabase.
+     */
     @Provides
     fun provideRemoteKeysDao(database: AppDatabase): RemoteKeysDao {
         return database.remoteKeysDao()

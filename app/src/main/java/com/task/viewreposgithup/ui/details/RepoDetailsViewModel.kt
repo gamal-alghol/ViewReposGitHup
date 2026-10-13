@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
+/*
  * ViewModel for Repository Details Screen.
  * Observes repository reactively from Room DB by repoId using Type-Safe Navigation with fallback for unit tests.
  */
@@ -33,7 +33,7 @@ class RepoDetailsViewModel @Inject constructor(
         savedStateHandle.get<Long>("repoId") ?: throw IllegalArgumentException("repoId is required")
     }
 
-    /**
+    /*
      * Reactive StateFlow of RepoDetailsUiState observing Room Database changes.
      */
     val uiState: StateFlow<RepoDetailsUiState> = getRepositoryByIdUseCase(repoId)
@@ -49,6 +49,9 @@ class RepoDetailsViewModel @Inject constructor(
             initialValue = RepoDetailsUiState.Loading
         )
 
+    /*
+     * Toggles bookmark state of the currently viewed repository.
+     */
     fun toggleBookmark() {
         val currentState = uiState.value
         if (currentState is RepoDetailsUiState.Success) {

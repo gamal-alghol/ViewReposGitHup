@@ -24,6 +24,9 @@ class RepoRemoteMediator(
     private val repoDao = database.repoDao()
     private val remoteKeysDao = database.remoteKeysDao()
 
+    /*
+      Initializes the RemoteMediator, determining whether to trigger initial refresh based on local item count.
+     */
     override suspend fun initialize(): InitializeAction {
         val localCount = repoDao.getCount()
 
@@ -33,18 +36,14 @@ class RepoRemoteMediator(
             InitializeAction.SKIP_INITIAL_REFRESH
         }
     }
+    /*
+     * Loads pagination data from the network and caches it into the database.
+     */
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, RepoEntity>
     ): MediatorResult {
-        Log.d(
-            "RepoRemoteMediator",
-            "loadType=$loadType, " +
-                    "pages=${state.pages.size}, " +
-                    "items=${state.pages.sumOf { it.data.size }}, " +
-                    "firstItem=${state.pages.firstOrNull()?.data?.firstOrNull()?.id}, " +
-                    "lastItem=${state.pages.lastOrNull()?.data?.lastOrNull()?.id}"
-        )
+
         return try {
             val page = when (loadType) {
                 LoadType.REFRESH -> 1
@@ -154,12 +153,18 @@ class RepoRemoteMediator(
         }
     }
 
+    /*
+     * Retrieves remote key for the last loaded item in paging state.
+     */
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, RepoEntity>): RemoteKeysEntity? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { repo ->
             remoteKeysDao.getRemoteKeysRepoId(repo.id)
         }
     }
 
+    /*
+     * Retrieves remote key for the first loaded item in paging state.
+     */
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, RepoEntity>): RemoteKeysEntity? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { repo ->
             remoteKeysDao.getRemoteKeysRepoId(repo.id)

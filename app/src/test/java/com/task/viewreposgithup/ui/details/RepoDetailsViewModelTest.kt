@@ -25,7 +25,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-/**
+/*
  * Unit test for RepoDetailsViewModel.
  */
 @OptIn(ExperimentalCoroutinesApi::class)

@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import com.task.viewreposgithup.ui.details.RepoDetailsScreen
 import com.task.viewreposgithup.ui.list.RepoListScreen
 
-/**
+/*
  * App Navigation Graph using Type-Safe Navigation with Kotlinx Serialization and Clean Architecture.
  */
 @Composable

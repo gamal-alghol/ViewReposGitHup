@@ -14,6 +14,9 @@ val supportedLanguages: List<String> = listOf(
 
 
 object LanguageColors {
+    /*
+     * Returns the branding color associated with a programming language.
+     */
     fun getColorForLanguage(language: String?): Color {
         return when (language) {
             "Kotlin" -> KotlinColor

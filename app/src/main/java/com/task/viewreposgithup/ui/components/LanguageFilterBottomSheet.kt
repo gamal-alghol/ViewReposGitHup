@@ -36,7 +36,7 @@ import com.task.viewreposgithup.util.AppConstants
 import com.task.viewreposgithup.util.LanguageColors
 import com.task.viewreposgithup.util.supportedLanguages
 
-/**
+/*
  * BottomSheet dialog for filtering repositories by programming language.
  */
 @OptIn(ExperimentalMaterial3Api::class)

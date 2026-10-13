@@ -14,14 +14,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-/**
- * Hilt DI Module for Network (Retrofit & OkHttp) injection.
- * Injects GitHub Token securely via OkHttp Interceptor if available.
- */
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /*
+     * Provides singleton OkHttpClient configured with auth and logging interceptors.
+     */
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -48,6 +48,7 @@ object NetworkModule {
             .build()
     }
 
+
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
@@ -57,6 +58,7 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
 
     @Provides
     @Singleton

@@ -41,7 +41,7 @@ import com.task.viewreposgithup.domain.model.Repo
 import com.task.viewreposgithup.ui.theme.DefaultLanguageColor
 import com.task.viewreposgithup.util.LanguageColors
 
-/**
+/*
  * Repository Item Card displaying repository name, star count, language,
  * and bookmark icon badge if bookmarked.
  */

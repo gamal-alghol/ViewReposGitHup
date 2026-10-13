@@ -24,9 +24,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * ViewModel for the Repositories List Screen.
- * Manages paged repositories data, language filtering, search query, sorting, and bookmark state updates.
+/*
+  ViewModel for the Repositories List Screen.
+  Manages paged repositories data, language filtering, search query, sorting, and bookmark state updates.
  */
 
 
@@ -34,7 +34,6 @@ import javax.inject.Inject
 @HiltViewModel
 class RepoListViewModel @Inject constructor(
     private val getRepositoriesUseCase: GetRepositoriesUseCase,
-    private val toggleBookmarkUseCase: ToggleBookmarkUseCase
 ) : ViewModel() {
 
 
@@ -46,9 +45,6 @@ class RepoListViewModel @Inject constructor(
         val repositoriesPagingFlow: Flow<PagingData<Repo>> = _uiState
             .map { state -> Triple(state.searchQuery, state.selectedLanguage, state.sortOption) }
             .distinctUntilChanged()
-            .let { flow ->
-                flow
-            }
             .flatMapLatest { (query, language, sort) ->
                 getRepositoriesUseCase(
                     language = language,
@@ -57,29 +53,38 @@ class RepoListViewModel @Inject constructor(
                 )
             }.cachedIn(viewModelScope)
 
+
+         // Sets the search query for filtering repositories.
+
         fun setSearchQuery(query: String) {
             _uiState.update { it.copy(searchQuery = query) }
         }
+
+
+        // Sets the language filter for repositories.
 
         fun setLanguageFilter(language: String?) {
             _uiState.update { it.copy(selectedLanguage = language) }
         }
 
+
+        // Sets the sort option for repositories.
+
         fun setSortOption(sort: SortOption) {
             _uiState.update { it.copy(sortOption = sort) }
         }
+
+
+         // Sets visibility of language filter bottom sheet.
 
         fun setFilterSheetVisible(isVisible: Boolean) {
             _uiState.update { it.copy(isFilterSheetVisible = isVisible) }
         }
 
+        // Sets visibility of sort bottom sheet.
+
         fun setSortSheetVisible(isVisible: Boolean) {
             _uiState.update { it.copy(isSortSheetVisible = isVisible) }
         }
 
-        fun toggleBookmark(repo: Repo) {
-            viewModelScope.launch {
-                toggleBookmarkUseCase(repo.id, !repo.isBookmarked)
-            }
-        }
 }

@@ -6,12 +6,12 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-/**
+/*
  * Retrofit REST API interface for GitHub API.
  */
 interface GithubApiService {
 
-    /**
+    /*
      * Retrieves public repositories for an organization.
      * REST endpoint: https://api.github.com/orgs/square/repos
      *

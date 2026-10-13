@@ -1,6 +1,6 @@
 package com.task.viewreposgithup.ui.navigation
 
-/**
+/*
  * Navigation screen routes definitions.
  */
 import kotlinx.serialization.Serializable

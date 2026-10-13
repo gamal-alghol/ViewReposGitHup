@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.task.viewreposgithup.domain.model.Repo
 import com.task.viewreposgithup.util.AppConstants
 
-/**
+/*
  * Room Database Entity for storing GitHub repositories locally.
  */
 @Entity(tableName = "repositories")
@@ -21,7 +21,7 @@ data class RepoEntity(
     val ownerAvatarUrl: String?,
     val updatedAt: String?
 ) {
-    /**
+    /*
      * Maps Room Entity to Domain Model.
      */
     fun toDomain(): Repo {

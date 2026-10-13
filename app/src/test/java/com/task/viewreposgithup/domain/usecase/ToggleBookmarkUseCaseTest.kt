@@ -8,7 +8,7 @@ import io.mockk.runs
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-/**
+/*
  * Unit test for ToggleBookmarkUseCase.
  */
 class ToggleBookmarkUseCaseTest {

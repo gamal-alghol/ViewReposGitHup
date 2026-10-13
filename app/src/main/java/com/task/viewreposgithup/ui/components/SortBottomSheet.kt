@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.task.viewreposgithup.domain.model.SortOption
 import com.task.viewreposgithup.ui.list.titleRes
 
-/**
+/*
  * BottomSheet dialog for sorting repositories by name, stars, or date.
  */
 @OptIn(ExperimentalMaterial3Api::class)

@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/**
+/*
  * Micro-interaction: Animated Bookmark Button.
  * Toggles bookmark status with a bounce/scale spring animation and color morphing.
  */

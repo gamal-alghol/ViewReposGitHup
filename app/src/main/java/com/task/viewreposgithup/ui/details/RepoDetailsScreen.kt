@@ -67,7 +67,7 @@ import com.task.viewreposgithup.ui.components.ErrorStateView
 import com.task.viewreposgithup.util.AppConstants
 import com.task.viewreposgithup.util.LanguageColors
 
-/**
+/*
  * Redesigned, gorgeous Repository Details Screen with smooth entrance animations,
  * owner avatar, star badge, language chip, and open on GitHub action.
  */

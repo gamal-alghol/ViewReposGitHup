@@ -2,7 +2,7 @@ package com.task.viewreposgithup.ui.details
 
 import com.task.viewreposgithup.domain.model.Repo
 
-/**
+/*
  * UI State for Repository Details Screen.
  */
 sealed interface RepoDetailsUiState {

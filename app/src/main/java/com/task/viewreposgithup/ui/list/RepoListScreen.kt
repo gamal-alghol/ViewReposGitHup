@@ -66,9 +66,9 @@ import com.task.viewreposgithup.ui.components.RepoItemCard
 import com.task.viewreposgithup.ui.components.ShimmerRepoLoading
 import com.task.viewreposgithup.ui.components.SortBottomSheet
 
-/**
- * Repositories List Screen displaying paginated list of Square Inc repositories,
- * using a single UiState to match Details Screen architecture.
+/*
+  Repositories List Screen displaying paginated list of Square Inc repositories,
+ using a single UiState to match Details Screen architecture.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -138,6 +138,9 @@ fun RepoListScreen(
     }
 }
 
+/*
+  Top app bar for repository list screen with search expansion and actions.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RepoListTopAppBar(
@@ -254,6 +257,9 @@ private fun RepoListTopAppBar(
     )
 }
 
+/*
+  Filter and sort chip bar for filtering by language and sorting options.
+ */
 @Composable
 private fun FilterAndSortSection(
     selectedLanguage: String?,
@@ -323,6 +329,9 @@ private fun FilterAndSortSection(
     }
 }
 
+/*
+ * Main content body for repository list, handling loading shimmer, error states, and lazy paging items.
+ */
 @Composable
 private fun RepoListContent(
     lazyPagingItems: LazyPagingItems<Repo>,
@@ -400,6 +409,9 @@ private fun RepoListContent(
     }
 }
 
+/*
+ Extension property to get string resource ID for each sort option.
+ */
 val SortOption.titleRes: Int
     @StringRes get() = when (this) {
         SortOption.NAME_ASC -> R.string.sort_name_asc

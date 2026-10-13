@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
+/*
  * Implementation of RepoRepository using Paging 3 with RemoteMediator and Room Database.
  */
 @Singleton
@@ -27,6 +27,9 @@ class RepoRepositoryImpl @Inject constructor(
 
     private val repoDao = database.repoDao()
 
+    /*
+     * Retrieves paged repositories flow with RemoteMediator support for network sync and local caching.
+     */
     @OptIn(ExperimentalPagingApi::class)
     override fun getRepositoriesPaged(
         language: String?,
@@ -58,6 +61,9 @@ class RepoRepositoryImpl @Inject constructor(
         }
     }
 
+    /*
+     * Reactively fetches a single repository by its ID from local database.
+     */
     @OptIn(ExperimentalPagingApi::class)
     override fun getRepositoryById(repoId: Long): Flow<Repo?> {
         return repoDao.getRepositoryById(repoId).map { entity ->
@@ -65,6 +71,9 @@ class RepoRepositoryImpl @Inject constructor(
         }
     }
 
+    /*
+     * Toggles bookmark state for the specified repository in local database.
+     */
     override suspend fun toggleBookmark(repoId: Long, isBookmarked: Boolean) {
         repoDao.updateBookmarkState(repoId, isBookmarked)
     }
